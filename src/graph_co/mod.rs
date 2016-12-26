@@ -6,4 +6,5 @@ pub use self::graph::Graph;
 mod cache;
 mod component_key;
 mod dyn;
+mod extensions;
 mod graph;

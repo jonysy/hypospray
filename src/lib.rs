@@ -17,9 +17,10 @@
 //! * [Incorrect "associated type must be specified" for supertrait](https://git.io/vMf3l)
 //!
 //! [1]: http://misko.hevery.com/2008/08/01/circular-dependency-in-constructors-and-dependency-injection/
+#![allow(warnings)]
 #![feature(field_init_shorthand)]
 
-pub use component::{Component, ComponentImp};
+pub use component::{Co, Component, ComponentImp};
 pub use ownership::PerGraph;
 pub use registry::Graph;
 

@@ -1,3 +1,6 @@
+/// * warning[E0122]: trait bounds are not (yet) enforced in type definitions
+pub type Co<M, T> = <M as Component<T>>::ComponentImp;
+
 pub trait Component<T> where T: ?Sized {
     
     type ComponentImp: 'static + ComponentImp<Component=T>;

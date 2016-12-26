@@ -1,9 +1,10 @@
+use std::any::Any;
 use std::cell::RefCell;
 use std::collections::HashMap;
-use super::{ComponentKey, Dyn};
+use super::ComponentKey;
 
 pub struct Cache {
-    ref_cell: RefCell<HashMap<ComponentKey, Dyn>>,
+    ref_cell: RefCell<HashMap<ComponentKey, Box<Any>>>,
 }
 
 impl Cache {

@@ -6,3 +6,6 @@ license = "MIT/Apache-2.0"
 
 [lib]
 plugin = true
+
+[dependencies]
+quote = "0.3"

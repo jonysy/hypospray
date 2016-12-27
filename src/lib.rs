@@ -21,7 +21,7 @@
 #![feature(field_init_shorthand)]
 
 pub use component::{Co, Component, ComponentImp};
-pub use ownership::PerGraph;
+pub use ownership::{PerCall, PerGraph};
 pub use registry::Graph;
 
 mod component;

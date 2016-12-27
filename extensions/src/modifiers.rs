@@ -1,6 +1,6 @@
 use syntax::ast::{
     AngleBracketedParameterData,
-    Generics, Ident, ImplPolarity, Item, ItemKind, MetaItemKind, MetaItem, NestedMetaItemKind, 
+    Generics, Ident, ImplPolarity, Item, ItemKind, Lifetime, MetaItemKind, MetaItem, NestedMetaItemKind, 
     NodeId, Path, PathParameters, PathSegment, PolyTraitRef, TraitBoundModifier, 
     TraitItem, TraitRef, Ty, TyKind, TyParam, TyParamBound, Unsafety, Visibility, WhereBoundPredicate, 
     WhereClause, WherePredicate
@@ -15,6 +15,7 @@ pub fn expand_inject(ecx: &mut ExtCtxt, span: Span,
                      meta_item: &MetaItem, item: Annotatable) 
                      -> Vec<Annotatable>
 {
+    
     const GEN_T_PARAM: &'static str = "T";
     
     let meta_item_list = meta_item.meta_item_list().expect("Expected `MetaItemKind::List`");
@@ -130,10 +131,10 @@ fn gen_ty_param_bounds(item: &Item, co: &Vec<(Symbol, Span)>) -> Vec<TyParamBoun
                         span: span,
                         global: true,
                         segments: vec![
-                          PathSegment {
-                              identifier: Ident::with_empty_ctxt(Symbol::intern("hypospray")),
-                              parameters: PathParameters::none(),
-                          },
+                            PathSegment {
+                                identifier: Ident::with_empty_ctxt(Symbol::intern("hypospray")),
+                                parameters: PathParameters::none(),
+                            },
                             PathSegment {
                                 identifier: Ident::with_empty_ctxt(Symbol::intern("Component")),
                                 parameters: PathParameters::AngleBracketed(
@@ -166,6 +167,12 @@ fn gen_ty_param_bounds(item: &Item, co: &Vec<(Symbol, Span)>) -> Vec<TyParamBoun
         
         ty_param_bounds.push(ty_param_bound);
     }
+    
+    ty_param_bounds.push(TyParamBound::RegionTyParamBound(Lifetime {
+        id: item.id,
+        span: item.span,
+        name: Symbol::intern("'static")
+    }));
     
     ty_param_bounds
 }

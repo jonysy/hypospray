@@ -1,5 +1,25 @@
-/// * warning[E0122]: trait bounds are not (yet) enforced in type definitions
-pub type Co<M, T> = <M as Component<T>>::ComponentImp;
+use std::ops::{Deref, DerefMut};
+
+pub struct Co<M, T> where M: ?Sized + Component<T>, T: ?Sized {
+    
+    component_imp: M::ComponentImp,
+}
+
+impl<M, T> Deref for Co<M, T> where M: ?Sized + Component<T>, T: ?Sized {
+    
+    type Target = T;
+    
+    fn deref(&self) -> &T {
+        unimplemented!()
+    }
+}
+
+impl<M, T> DerefMut for Co<M, T> where M: ?Sized + Component<T>, T: ?Sized {
+    
+    fn deref_mut(&mut self) -> &mut T {
+        unimplemented!()
+    }
+}
 
 pub trait Component<T> where T: ?Sized {
     

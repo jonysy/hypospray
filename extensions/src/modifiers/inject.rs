@@ -1,9 +1,9 @@
 use syntax::ast::{
     AngleBracketedParameterData,
     Generics, Ident, ImplPolarity, Item, ItemKind, Lifetime, MetaItemKind, MetaItem, NestedMetaItemKind, 
-    NodeId, Path, PathParameters, PathSegment, PolyTraitRef, TraitBoundModifier, 
-    TraitItem, TraitRef, Ty, TyKind, TyParam, TyParamBound, Unsafety, Visibility, WhereBoundPredicate, 
-    WhereClause, WherePredicate
+    Path, PathParameters, PathSegment, PolyTraitRef, TraitBoundModifier, 
+    TraitRef, Ty, TyKind, TyParam, TyParamBound, Unsafety, Visibility,
+    WhereClause
 };
 use syntax::codemap::{Spanned, Span};
 use syntax::ext::base::{Annotatable, ExtCtxt};
@@ -11,7 +11,7 @@ use syntax::ptr::P;
 use syntax::symbol::Symbol;
 use syntax::util::ThinVec;
 
-pub fn expand_inject(ecx: &mut ExtCtxt, span: Span, 
+pub fn expand_inject(_: &mut ExtCtxt, _: Span, 
                      meta_item: &MetaItem, item: Annotatable) 
                      -> Vec<Annotatable>
 {
@@ -20,7 +20,7 @@ pub fn expand_inject(ecx: &mut ExtCtxt, span: Span,
     
     let meta_item_list = meta_item.meta_item_list().expect("Expected `MetaItemKind::List`");
     
-    let mut item = item.expect_item();
+    let item = item.expect_item();
     
     let mut co = vec![];
     

@@ -1,16 +1,7 @@
 use aster::AstBuilder;
-use syntax::ast::{
-    AngleBracketedParameterData,
-    Generics, Ident, ImplPolarity, Item, ItemKind, Lifetime, MetaItemKind, MetaItem, NestedMetaItemKind, 
-    NodeId, Path, PathParameters, PathSegment, PolyTraitRef, TraitBoundModifier, 
-    TraitItem, TraitRef, Ty, TyKind, TyParam, TyParamBound, Unsafety, Visibility, WhereBoundPredicate, 
-    WhereClause, WherePredicate
-};
+use syntax::ast::{ItemKind, MetaItemKind, MetaItem, NestedMetaItemKind};
 use syntax::codemap::{Spanned, Span};
 use syntax::ext::base::{Annotatable, ExtCtxt};
-use syntax::ptr::P;
-use syntax::symbol::Symbol;
-use syntax::util::ThinVec;
 
 pub fn expand_implements(ecx: &mut ExtCtxt, span: Span, 
                          meta_item: &MetaItem, item: &Annotatable, 
@@ -41,8 +32,7 @@ pub fn expand_implements(ecx: &mut ExtCtxt, span: Span,
         _ => panic!("Expected `NestedMetaItemKind::MetaItem`"),
     };
     
-    let mut item = item.clone().expect_item();
-    let ident = item.ident;
+    let item = item.clone().expect_item();
     
     let generics = match item.node {
         ItemKind::Struct(_, ref generics) => {
@@ -50,7 +40,7 @@ pub fn expand_implements(ecx: &mut ExtCtxt, span: Span,
         },
         
         _ => {
-            panic!("Something went wrong!");
+            panic!("Something went wrong: {:?}", span);
         }
     };
     

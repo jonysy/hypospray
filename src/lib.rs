@@ -5,11 +5,6 @@
 //! DI is not for circular dependency resolution. Circular dependency is something that is to be 
 //! avoided: [Circular Dependency in constructors and Dependency Injection][1]
 //!
-//! ## RFCs
-//!
-//! * [Allow fields in traits](https://git.io/vagQa)
-//! * [Abstract return types](https://git.io/vMf3B)
-//!
 //! ## Issues
 //!
 //! * [The value of the associated type `_` must be specified](https://git.io/vMf3W)

@@ -3,12 +3,12 @@ pub type Co<M, T> = <M as Component<T>>::ComponentImp;
 
 pub trait Component<T> where T: ?Sized {
     
-    type ComponentImp: 'static + ComponentImp<Component=T>;
+    type ComponentImp: 'static + ComponentImp<Component=T> + for<'dep> ConstructFn<'dep>;
     type Scope;
 }
 
 /// Component implementation
-pub trait ComponentImp: for<'dep> ConstructFn<'dep> {
+pub trait ComponentImp {
     
     type Component: ?Sized;
 }

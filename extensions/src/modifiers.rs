@@ -50,7 +50,7 @@ pub fn expand_inject(ecx: &mut ExtCtxt, span: Span,
         ty_params: P::new(),
         where_clause: WhereClause {
             id: item.id,
-            predicates: predicates(&item, &co, "Self"),
+            predicates: vec![],
         },
         span: item.span
     };
@@ -74,7 +74,7 @@ pub fn expand_inject(ecx: &mut ExtCtxt, span: Span,
                 }]),
                 where_clause: WhereClause {
                     id: item.id,
-                    predicates: predicates(&item, &co, GEN_T_PARAM),
+                    predicates: vec![],
                 },
                 span: item.span,
             },
@@ -115,90 +115,6 @@ pub fn expand_inject(ecx: &mut ExtCtxt, span: Span,
     });
     
     vec![Annotatable::Item(item), Annotatable::Item(P(impl_trait))]
-}
-
-fn predicates(item: &Item, co: &Vec<(Symbol, Span)>, lhs: &str) -> Vec<WherePredicate> {
-    let mut predicates = vec![];
-    
-    for &(name, span) in co.iter() {
-        let where_predicate = WherePredicate::BoundPredicate(WhereBoundPredicate {
-            span: span,
-            bound_lifetimes: vec![],
-            bounded_ty: P(Ty {
-                id: item.id,
-                node: TyKind::Path(None, Path {
-                    span: span,
-                    global: true,
-                    segments: vec![
-                        PathSegment {
-                            identifier: Ident::with_empty_ctxt(Symbol::intern("hypospray")),
-                            parameters: PathParameters::none(),
-                        },
-                        PathSegment {
-                            identifier: Ident::with_empty_ctxt(Symbol::intern("Co")),
-                            parameters: PathParameters::AngleBracketed(AngleBracketedParameterData {
-                                lifetimes: vec![],
-                                types: P::from_vec(vec![
-                                    P(Ty {
-                                        id: item.id,
-                                        node: TyKind::Path(None, Path {
-                                            span: span,
-                                            global: false,
-                                            segments: vec![PathSegment {
-                                                identifier: Ident::with_empty_ctxt(Symbol::intern(lhs)),
-                                                parameters: PathParameters::none(),
-                                            }]
-                                        }),
-                                        span: span,
-                                    }),
-                                    P(Ty {
-                                        id: item.id,
-                                        node: TyKind::Path(None, Path {
-                                            span: span,
-                                            global: false,
-                                            segments: vec![PathSegment {
-                                                identifier: Ident::with_empty_ctxt(name),
-                                                parameters: PathParameters::none(),
-                                            }]
-                                        }),
-                                        span: span,
-                                    })
-                                ]),
-                                bindings: P::from_vec(vec![]),
-                            })
-                        }
-                    ]
-                }),
-                span: span
-            }),
-            bounds: P::from_vec(vec![
-                TyParamBound::TraitTyParamBound(
-                    PolyTraitRef {
-                        bound_lifetimes: vec![],
-                        trait_ref: TraitRef {
-                            path: Path {
-                                span: span,
-                                global: false,
-                                segments: vec![
-                                    PathSegment {
-                                        identifier: Ident::with_empty_ctxt(name),
-                                        parameters: PathParameters::none(),
-                                    },
-                                ]
-                            },
-                            ref_id: item.id,
-                        },
-                        span: span,
-                    },
-                    TraitBoundModifier::None
-                ),
-            ])
-        });
-        
-        predicates.push(where_predicate)
-    }
-    
-    predicates
 }
 
 fn gen_ty_param_bounds(item: &Item, co: &Vec<(Symbol, Span)>) -> Vec<TyParamBound> {

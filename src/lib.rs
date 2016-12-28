@@ -1,5 +1,7 @@
 //! Dependency Injection
 //!
+//! The goal of dependency injection is to make components more reusable and testable.
+//!
 //! ## Cyclic Dependency
 //!
 //! DI is not for circular dependency resolution. Circular dependency is something that is to be 
@@ -13,12 +15,12 @@
 //!
 //! [1]: http://misko.hevery.com/2008/08/01/circular-dependency-in-constructors-and-dependency-injection/
 #![allow(warnings)]
-#![feature(field_init_shorthand)]
+#![feature(associated_type_defaults, field_init_shorthand)]
 
-pub use core::{Co, Component, ComponentImp, ConstructFn, };
-pub use ownership::{PerCall, PerGraph};
+pub use core::{Co, Component, ComponentImp, Construct, };
+pub use lifecycle::{Prototype, Singleton, };
 pub use registry::Graph;
 
 mod core;
-mod ownership;
+mod lifecycle;
 mod registry;

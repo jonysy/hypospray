@@ -1,3 +1,4 @@
+#![allow(warnings)]
 #![feature(box_syntax, plugin_registrar, quote, rustc_private, slice_patterns)]
 
 #[macro_use] extern crate quote;
@@ -23,5 +24,10 @@ pub fn plugin_registrar(reg: &mut Registry) {
     reg.register_syntax_extension(
         Symbol::intern("implements"),
         MultiDecorator(box modifiers::expand_implements)
+    );
+    
+    reg.register_syntax_extension(
+        Symbol::intern("bind"),
+        MultiDecorator(box modifiers::expand_bind)
     );
 }

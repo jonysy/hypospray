@@ -6,6 +6,7 @@ license = "MIT/Apache-2.0"
 
 [[example]]
 name = "car"
+path = "examples/car/main.rs"
 
 [dev-dependencies.hypospray_extensions]
 path = "./extensions"

@@ -30,10 +30,10 @@ pub fn expand_bind(ecx: &mut ExtCtxt, _: Span,
             } => {
                 
                 match &symbol.to_string().split('#').collect::<Vec<&str>>()[..] {
-                    &[scope, imp] => {
+                    &[imp, scope] => {
                         
-                        let scope = Ident::from_str(scope);
                         let imp = Ident::from_str(imp);
+                        let scope = Ident::from_str(scope);
                         let tr = Ident::with_empty_ctxt(tr_name);
                         
                         push(Annotatable::Item(
@@ -49,7 +49,7 @@ pub fn expand_bind(ecx: &mut ExtCtxt, _: Span,
                     },
                     
                     _ => {
-                        panic!("Expected pattern `<kind>#<impl>`")
+                        panic!("Expected pattern `<impl>#<kind>`")
                     }
                 }
             },

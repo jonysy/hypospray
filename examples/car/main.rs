@@ -11,6 +11,7 @@ mod sports_car;
 fn main() {
     use hypospray::Graph;
     use module::Module;
+    use sports_car::SportsCar;
     
     pub type ModuleDependencies = Graph<Module>;
 }

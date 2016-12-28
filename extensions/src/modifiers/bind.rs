@@ -29,12 +29,13 @@ pub fn expand_bind(ecx: &mut ExtCtxt, _: Span,
                 ..
             } => {
                 
+                let tr = Ident::with_empty_ctxt(tr_name);
+                
                 match &symbol.to_string().split('#').collect::<Vec<&str>>()[..] {
                     &[imp, scope] => {
                         
                         let imp = Ident::from_str(imp);
                         let scope = Ident::from_str(scope);
-                        let tr = Ident::with_empty_ctxt(tr_name);
                         
                         push(Annotatable::Item(
                             quote_item!(ecx,
@@ -48,8 +49,23 @@ pub fn expand_bind(ecx: &mut ExtCtxt, _: Span,
                         ));
                     },
                     
+                    &[imp] => {
+                        
+                        let imp = Ident::from_str(imp);
+                        
+                        push(Annotatable::Item(
+                            quote_item!(ecx,
+
+                                impl ::hypospray::Component<$tr> for $module {
+
+                                    type ComponentImp = $imp;
+                                }
+                            ).unwrap(),
+                        ));
+                    },
+                    
                     _ => {
-                        panic!("Expected pattern `<impl>#<kind>`")
+                        panic!("Expected pattern `<impl>#<kind>` or `<imp>`")
                     }
                 }
             },

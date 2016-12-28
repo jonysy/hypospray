@@ -57,29 +57,12 @@ pub fn expand_implements(ecx: &mut ExtCtxt, span: Span,
     push(Annotatable::Item(
         quote_item!(ecx,
             
-            impl$generics AsRef<$co> for $ty $where_clause {
-                
-                fn as_ref(&self) -> &($co + 'static) { self }
-            }
-        ).unwrap(),
-    ));
-    
-    push(Annotatable::Item(
-        quote_item!(ecx,
-            
-            impl$generics AsMut<$co> for $ty $where_clause {
-                
-                fn as_mut(&mut self) -> &mut($co + 'static) { self }
-            }
-        ).unwrap(),
-    ));
-    
-    push(Annotatable::Item(
-        quote_item!(ecx,
-            
             impl$generics ::hypospray::ComponentImp for $ty $where_clause {
                 
                 type Component = $co;
+
+                fn __as_ref(&self) -> &($co + 'static) { self }
+                fn __as_mut(&mut self) -> &mut($co + 'static) { self }
             }
         ).unwrap(),
     ));

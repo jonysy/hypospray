@@ -4,6 +4,9 @@ version = "0.1.0"
 authors = ["Jony <jonysy@users.noreply.github.com>"]
 license = "MIT/Apache-2.0"
 
+[[example]]
+name = "car"
+
 [dev-dependencies.hypospray_extensions]
 path = "./extensions"
 version = "0.1.0"

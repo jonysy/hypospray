@@ -9,15 +9,16 @@ fn main() {
 
 }
 
-#[inject(Engine, Manufacturer)]
+#[inject(Engine)]
 pub trait Deps { }
 
-pub struct SportsCar<M> where M: ?Sized + Deps { engine: Co<M, Engine> }
+pub struct SportsCar<M: ?Sized + Deps> { engine: Co<M, Engine> }
 
-impl<M> SportsCar<M> where M: ?Sized + Deps {
+impl<M: ?Sized + Deps> SportsCar<M> {
     
     fn gas(&self) {
-        println!("{}", self.engine.rev())
+
+        println!("{}", self.engine.rev());
     }
 }
 
@@ -30,11 +31,5 @@ pub struct GranCabrioV8;
 
 impl Engine for GranCabrioV8 {
     
-    fn rev(&self) -> &'static str {
-        "Vrooom! Vroom! Vroooom!!!"
-    }
-}
-
-pub trait Manufacturer {
-    fn name(&self) -> &'static str;
+    fn rev(&self) -> &'static str { "Vrooom! Vroom! Vroooom!!!" }
 }

@@ -15,10 +15,10 @@
 #![allow(warnings)]
 #![feature(field_init_shorthand)]
 
-pub use component::{Co, Component, ComponentImp};
+pub use core::{Co, Component, ComponentImp, ConstructFn, };
 pub use ownership::{PerCall, PerGraph};
 pub use registry::Graph;
 
-mod component;
+mod core;
 mod ownership;
 mod registry;

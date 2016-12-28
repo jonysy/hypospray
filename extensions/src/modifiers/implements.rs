@@ -73,4 +73,14 @@ pub fn expand_implements(ecx: &mut ExtCtxt, span: Span,
             }
         ).unwrap(),
     ));
+    
+    push(Annotatable::Item(
+        quote_item!(ecx,
+            
+            impl$generics ::hypospray::ComponentImp for $ty $where_clause {
+                
+                type Component = $co;
+            }
+        ).unwrap(),
+    ));
 }

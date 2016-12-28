@@ -1,19 +1,23 @@
+#![feature(plugin)]
+#![plugin(hypospray_extensions)]
+
+extern crate hypospray;
+
 use hypospray::Co;
 
+fn main() {
+
+}
+
 #[inject(Engine, Manufacturer)]
-pub trait Mod { }
+pub trait Deps { }
 
-pub struct SportsCar<'imp, M: ?Sized+Mod> { engine: &'imp Co<M, Engine>, manu: &'imp Co<M, Manufacturer> }
+pub struct SportsCar<M> where M: ?Sized + Deps { engine: Co<M, Engine> }
 
-impl<'imp, M> SportsCar<'imp, M> where M: ?Sized + Mod {
+impl<M> SportsCar<M> where M: ?Sized + Deps {
     
-    fn rev_engine(&self) {
-        println!("{}", self.engine.rev());
-    }
-    
-    fn manu(&self) {
-        
-        println!("{}", self.manu.name())
+    fn gas(&self) {
+        println!("{}", self.engine.rev())
     }
 }
 

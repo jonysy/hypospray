@@ -23,7 +23,7 @@ impl<M, T> DerefMut for Co<M, T> where M: ?Sized + Component<T>, T: ?Sized {
 
 pub trait Component<T> where T: ?Sized {
     
-    type ComponentImp: 'static + ComponentImp<Component=T> + for<'dep> ConstructFn<'dep>;
+    type ComponentImp: 'static + AsRef<T> + AsMut<T> + ComponentImp<Component=T> + for<'dep> ConstructFn<'dep>;
     type Scope;
 }
 

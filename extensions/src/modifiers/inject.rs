@@ -1,6 +1,6 @@
 use syntax::ast::{
-    AngleBracketedParameterData,
-    Generics, Ident, ImplPolarity, Item, ItemKind, Lifetime, MetaItemKind, MetaItem, NestedMetaItemKind, 
+    AngleBracketedParameterData, Generics, Ident, ImplPolarity, Item, ItemKind, Lifetime, 
+    MetaItemKind, MetaItem, NestedMetaItemKind, 
     Path, PathParameters, PathSegment, PolyTraitRef, TraitBoundModifier, 
     TraitRef, Ty, TyKind, TyParam, TyParamBound, Unsafety, Visibility,
     WhereClause

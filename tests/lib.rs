@@ -4,5 +4,4 @@
 
 extern crate hypospray;
 
-mod extensions;
 mod trait_obj;

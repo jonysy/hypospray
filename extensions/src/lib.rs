@@ -1,4 +1,3 @@
-#![allow(warnings)]
 #![feature(box_syntax, plugin_registrar, quote, rustc_private, slice_patterns)]
 
 #[macro_use] extern crate quote;

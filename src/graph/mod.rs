@@ -5,7 +5,7 @@ use std::any::{Any, TypeId};
 use std::cell::RefCell;
 use std::collections::HashMap;
 use std::marker::PhantomData;
-use super::{Co, Component, Singleton, };
+use super::{Component, Singleton, };
 
 pub struct Graph<M> where M: ?Sized { cache: Cache, _mod: PhantomData<M> }
 

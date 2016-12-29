@@ -1,6 +1,10 @@
-//! Dependency Injection
+//! Dependency Injection (DI)
 //!
 //! The goal of dependency injection is to make components more reusable and testable.
+//!
+//! ## What is Dependency Injection?
+//!
+//! [5-minute introduction.](https://youtu.be/IKD2-MAkXyQ)
 //!
 //! ## Cyclic Dependency
 //!
@@ -14,7 +18,6 @@
 //! * [Incorrect "associated type must be specified" for supertrait](https://git.io/vMf3l)
 //!
 //! [1]: http://misko.hevery.com/2008/08/01/circular-dependency-in-constructors-and-dependency-injection/
-#![allow(warnings)]
 #![feature(field_init_shorthand, pub_restricted)]
 
 pub use core::{Co, Component, ComponentImp, Construct, };

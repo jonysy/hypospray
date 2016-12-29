@@ -1,4 +1,4 @@
-use {Co, Component, ComponentImp, Construct, Graph, Prototype, Singleton, };
+use {Co, Component, Construct, Graph, Prototype, Singleton, };
 
 pub trait Resolve<'imp, T, K> where T: ?Sized {
     
@@ -67,9 +67,8 @@ impl<'imp, M, T> Dependencies<'imp, &'imp Co<M, T>> for Graph<M>
     
     fn __dependencies(&'imp self) -> &'imp Co<M, T> {
         use std::any::{Any, TypeId};
-        use std::cell::{Ref, RefCell};
+        use std::cell::RefCell;
         use std::collections::HashMap;
-        use std::ops::Deref;
         
         let id = TypeId::of::<T>();
         

@@ -1,6 +1,7 @@
 use engine::Engine;
 use hypospray::Construct;
 
+#[derive(Debug)]
 #[implements(Engine)]
 pub struct GranCabrioV8;
 

@@ -5,7 +5,7 @@ use std::any::{Any, TypeId};
 use std::cell::RefCell;
 use std::collections::HashMap;
 use std::marker::PhantomData;
-use super::{Co, Component, };
+use super::{Co, Component, Singleton, };
 
 pub struct Graph<M> where M: ?Sized { cache: Cache, _mod: PhantomData<M> }
 
@@ -22,10 +22,10 @@ impl<M> Graph<M> where M: ?Sized {
         }
     }
     
-    pub fn dep<T>(&self) -> Co<M, T>
+    pub fn dep<T>(&self) -> <Graph<M> as Resolve<T, M::Scope>>::CoImp
         where M: Component<T>, 
               T: 'static + ?Sized, 
-              Graph<M>: for<'imp> Resolve<'imp, T, M::Scope, CoImp = Co<M, T>> {
+              Graph<M>: for<'imp> Resolve<'imp, T, M::Scope> {
         
         self.__resolve()
     }
@@ -40,7 +40,9 @@ impl<M> Graph<M> where M: ?Sized {
     /// ```rust
     /// // ..
     /// ```
-    pub fn eager<T>(&self) -> ! where T: ?Sized {
+    pub fn eager<T>(&self) -> !
+        where M: Component<T, Scope=Singleton>, 
+              T: 'static + ?Sized, Graph<M>: for<'imp> Resolve<'imp, T, M::Scope> {
 
         unimplemented!()
     }

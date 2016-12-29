@@ -4,14 +4,9 @@ use hypospray::Co;
 #[inject(Engine)]
 pub trait Deps { }
 
-pub struct SportsCar<M: ?Sized + Deps> { engine: Co<M, Engine> }
+pub struct SportsCar<'imp, M: ?Sized + Deps> { pub engine: &'imp Co<M, Engine> }
 
-impl<M: ?Sized + Deps> SportsCar<M> {
-    
-    pub fn new(engine: Co<M, Engine>) -> Self {
-        
-        SportsCar { engine: engine }
-    }
+impl<'imp, M: ?Sized + Deps> SportsCar<'imp, M> {
     
     pub fn gas(&self) {
 

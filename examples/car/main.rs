@@ -17,6 +17,6 @@ fn main() {
     let m = Graph::<Module>::new();
     let engine = m.dep::<Engine>();
     
-    let car = SportsCar::new(engine);
+    let car = SportsCar { engine: engine };
     car.gas()
 }

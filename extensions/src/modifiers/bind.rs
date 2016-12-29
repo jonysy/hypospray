@@ -49,21 +49,6 @@ pub fn expand_bind(ecx: &mut ExtCtxt, _: Span,
                         ));
                     },
                     
-                    &[imp] => {
-                        
-                        let imp = Ident::from_str(imp);
-                        
-                        push(Annotatable::Item(
-                            quote_item!(ecx,
-
-                                impl ::hypospray::Component<$tr> for $module {
-
-                                    type ComponentImp = $imp;
-                                }
-                            ).unwrap(),
-                        ));
-                    },
-                    
                     _ => {
                         panic!("Expected pattern `<impl>#<kind>` or `<imp>`")
                     }

@@ -1,1 +1,0 @@
-pub use std::any::TypeId as ComponentKey;

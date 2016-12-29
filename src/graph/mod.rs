@@ -1,19 +1,33 @@
+pub use self::ext::Resolve;
+mod ext;
+
+use std::any::{Any, TypeId};
+use std::cell::RefCell;
+use std::collections::HashMap;
 use std::marker::PhantomData;
-use super::Cache;
+use super::{Co, Component, };
 
 pub struct Graph<M> where M: ?Sized { cache: Cache, _mod: PhantomData<M> }
+
+type Cache = RefCell<HashMap<TypeId, Box<Any>>>;
 
 impl<M> Graph<M> where M: ?Sized {
     
     /// Constructs a new, empty `Graph<M>`.
     pub fn new() -> Graph<M> {
-
-        Graph { cache: Cache::new(), _mod: PhantomData }
+        
+        Graph {
+            cache: RefCell::new(HashMap::new()), 
+            _mod: PhantomData
+        }
     }
     
-    pub fn dep<T>(&self) -> ! where T: ?Sized {
+    pub fn dep<T>(&self) -> Co<M, T>
+        where M: Component<T>, 
+              T: 'static + ?Sized, 
+              Graph<M>: for<'imp> Resolve<'imp, T, M::Scope, CoImp = Co<M, T>> {
         
-        unimplemented!()
+        self.__resolve()
     }
 
     /// Force a component to be created eagerly.

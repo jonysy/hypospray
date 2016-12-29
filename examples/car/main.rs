@@ -10,8 +10,13 @@ mod sports_car;
 
 fn main() {
     use hypospray::Graph;
+    use engine::Engine;
     use module::Module;
     use sports_car::SportsCar;
     
-    pub type ModuleDependencies = Graph<Module>;
+    let m = Graph::<Module>::new();
+    let engine = m.dep::<Engine>();
+    
+    let car = SportsCar::new(engine);
+    car.gas()
 }

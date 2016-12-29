@@ -3,5 +3,3 @@
 #![plugin(hypospray_extensions)]
 
 extern crate hypospray;
-
-mod trait_obj;

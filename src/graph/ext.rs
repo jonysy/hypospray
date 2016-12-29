@@ -63,8 +63,7 @@ impl<'imp, M, T> Dependencies<'imp, &'imp Co<M, T>> for Graph<M>
     where M: ?Sized + Component<T, Scope=Singleton>,
           M::ComponentImp: 'static + Construct<'imp>,
           T: 'static + ?Sized,
-          Graph<M>: for<'dep> Dependencies<'dep, <M::ComponentImp as Construct<'imp>>::Dep>
-{
+          Graph<M>: for<'dep> Dependencies<'dep, <M::ComponentImp as Construct<'imp>>::Dep> {
     
     fn __dependencies(&'imp self) -> &'imp Co<M, T> {
         use std::any::{Any, TypeId};
@@ -92,3 +91,25 @@ impl<'imp, M, T> Dependencies<'imp, &'imp Co<M, T>> for Graph<M>
         to_borrowed(&self.cache)
     }
 }
+
+macro_rules! deps {
+    ($($dep:ident),*) => {
+        
+        impl<'imp, M, $($dep,)*> Dependencies<'imp, ($($dep,)*)> for Graph<M>
+            where M: ?Sized,
+                  $(Graph<M>: for<'dep> Dependencies<'dep, $dep>,)* {
+                      
+            fn __dependencies(&'imp self) -> ($($dep,)*) {
+                
+                ($(
+                    Dependencies::<'imp, $dep>::__dependencies(self),
+                )*)
+            }
+        }
+    }
+}
+
+deps!(D1, D2);
+deps!(D1, D2, D3);
+deps!(D1, D2, D3, D4);
+deps!(D1, D2, D3, D4, D5);

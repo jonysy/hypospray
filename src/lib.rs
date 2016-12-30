@@ -1,17 +1,20 @@
 //! Dependency Injection (DI)
 //!
-//! The goal of dependency injection is to make components more reusable and testable.
+//! # Goals
 //!
-//! ## What is Dependency Injection?
+//! * Design to allow for focused, reusable, testable components
+//! * A dependency graph checked at compile time
+//!
+//! # What is Dependency Injection?
 //!
 //! [5-minute introduction.](https://youtu.be/IKD2-MAkXyQ)
 //!
-//! ## Cyclic Dependency
+//! # Cyclic Dependency
 //!
-//! DI is not for circular dependency resolution. Circular dependency is something that is to be 
-//! avoided: [Circular Dependency in constructors and Dependency Injection][1]
+//! DI is not for circular dependency resolution: [Circular dependency is something that is to be 
+//! avoided][1].
 //!
-//! ## Issues
+//! # Issues
 //!
 //! * [The value of the associated type `_` must be specified](https://git.io/vMf3W)
 //! * [Associated type constraints on supertraits don't propagate to usage sites](https://git.io/vMf3l)

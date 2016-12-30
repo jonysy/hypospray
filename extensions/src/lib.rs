@@ -5,7 +5,8 @@
 extern crate aster;
 extern crate rustc_plugin;
 
-mod modifiers;
+mod decorator;
+mod modifier;
 
 use rustc_plugin::Registry;
 use syntax::ext::base::SyntaxExtension::MultiDecorator;
@@ -17,16 +18,16 @@ pub fn plugin_registrar(reg: &mut Registry) {
     
     reg.register_syntax_extension(
         Symbol::intern("inject"),
-        MultiModifier(box modifiers::expand_inject)
+        MultiModifier(box modifier::expand_inject)
     );
     
     reg.register_syntax_extension(
         Symbol::intern("implements"),
-        MultiDecorator(box modifiers::expand_implements)
+        MultiDecorator(box decorator::expand_implements)
     );
     
     reg.register_syntax_extension(
         Symbol::intern("bind"),
-        MultiDecorator(box modifiers::expand_bind)
+        MultiDecorator(box decorator::expand_bind)
     );
 }

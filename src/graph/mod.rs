@@ -1,11 +1,11 @@
-pub use self::ext::Resolve;
+pub use self::ext::{Dependencies, Resolve, };
 mod ext;
 
 use std::any::{Any, TypeId};
 use std::collections::HashMap;
 use std::marker::PhantomData;
 use std::sync::{Arc, Mutex};
-use super::{Component, Singleton, };
+use super::{Component, Construct, };
 
 pub struct Graph<M>(Arc<Shared>, PhantomData<M>) where M: ?Sized;
 
@@ -31,6 +31,14 @@ impl<M> Graph<M> where M: ?Sized {
               Graph<M>: for<'imp> Resolve<'imp, T, M::Scope> {
         
         self.__resolve()
+    }
+
+    pub fn construct<'dep, I>(&'dep self) -> I
+        where I: Construct<'dep>,
+              Graph<M>: Dependencies<'dep, <I as Construct<'dep>>::Dep> {
+
+        let deps = self.__dependencies();
+        I::__construct(deps)
     }
 
 //    /// Force a component to be created eagerly.

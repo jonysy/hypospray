@@ -66,8 +66,7 @@ impl<'imp, M, T> Dependencies<'imp, &'imp Co<M, T>> for Graph<M>
           Graph<M>: for<'dep> Dependencies<'dep, <M::ComponentImp as Construct<'imp>>::Dep> {
     
     fn __dependencies(&'imp self) -> &'imp Co<M, T> {
-        use std::any::{Any, TypeId};
-        use std::collections::HashMap;
+        use std::any::TypeId;
         use std::mem;
         use std::sync::MutexGuard;
         use super::{Arc, Container, Shared};

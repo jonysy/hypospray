@@ -2,24 +2,27 @@ pub use self::ext::Resolve;
 mod ext;
 
 use std::any::{Any, TypeId};
-use std::cell::RefCell;
 use std::collections::HashMap;
 use std::marker::PhantomData;
+use std::sync::{Arc, Mutex};
 use super::{Component, Singleton, };
 
-pub struct Graph<M> where M: ?Sized { cache: Cache, _mod: PhantomData<M> }
+pub struct Graph<M>(Arc<Shared>, PhantomData<M>) where M: ?Sized;
 
-type Cache = RefCell<HashMap<TypeId, Box<Any>>>;
+type Dyn = Box<Any + 'static + Send>;
+type Container = HashMap<TypeId, Dyn>;
+type Shared = Mutex<Container>;
 
 impl<M> Graph<M> where M: ?Sized {
     
     /// Constructs a new, empty `Graph<M>`.
     pub fn new() -> Graph<M> {
         
-        Graph {
-            cache: RefCell::new(HashMap::new()), 
-            _mod: PhantomData
-        }
+        let hash_map = HashMap::new();
+        let mutex = Mutex::new(hash_map);
+        let arc = Arc::new(mutex);
+        
+        return Graph(arc, PhantomData);
     }
     
     pub fn dep<T>(&self) -> <Graph<M> as Resolve<T, M::Scope>>::CoImp
@@ -30,20 +33,30 @@ impl<M> Graph<M> where M: ?Sized {
         self.__resolve()
     }
 
-    /// Force a component to be created eagerly.
-    ///
-    /// By default, all components are created when needed (i.e., lazily). `eager` allows you to 
-    /// create a component at the beginning of an application.
-    ///
-    /// ## Example
-    ///
-    /// ```rust
-    /// // ..
-    /// ```
-    pub fn eager<T>(&self) -> !
-        where M: Component<T, Scope=Singleton>, 
-              T: 'static + ?Sized, Graph<M>: for<'imp> Resolve<'imp, T, M::Scope> {
+//    /// Force a component to be created eagerly.
+//    ///
+//    /// By default, all components are created when needed (i.e., lazily). `eager` allows you to 
+//    /// create a component at the beginning of an application.
+//    ///
+//    /// ## Example
+//    ///
+//    /// ```rust
+//    /// // ..
+//    /// ```
+//    pub fn eager<T>(&self) -> !
+//        where M: Component<T, Scope=Singleton>, 
+//              T: 'static + ?Sized, Graph<M>: for<'imp> Resolve<'imp, T, M::Scope> {
+//
+//        unimplemented!()
+//    }
+}
 
-        unimplemented!()
+impl<M> Clone for Graph<M> where M: ?Sized {
+    
+    fn clone(&self) -> Self {
+        
+        let &Graph(ref arc, ..) = self;
+        
+        Graph(arc.clone(), PhantomData)
     }
 }

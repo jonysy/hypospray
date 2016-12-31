@@ -61,33 +61,50 @@ impl<'imp, M, T> Dependencies<'imp, Co<M, T>> for Graph<M>
 
 impl<'imp, M, T> Dependencies<'imp, &'imp Co<M, T>> for Graph<M>
     where M: ?Sized + Component<T, Scope=Singleton>,
-          M::ComponentImp: 'static + Construct<'imp>,
+          M::ComponentImp: 'static + Send + Construct<'imp>,
           T: 'static + ?Sized,
           Graph<M>: for<'dep> Dependencies<'dep, <M::ComponentImp as Construct<'imp>>::Dep> {
     
     fn __dependencies(&'imp self) -> &'imp Co<M, T> {
         use std::any::{Any, TypeId};
-        use std::cell::RefCell;
         use std::collections::HashMap;
+        use std::mem;
+        use std::sync::MutexGuard;
+        use super::{Arc, Container, Shared};
         
         let id = TypeId::of::<T>();
         
-        let to_borrowed = |ca: &'imp RefCell<HashMap<_, _>>| {
-            let de: &'imp HashMap<TypeId, Box<_>> = unsafe { &*ca.as_ptr() };
-            let ref_boxed: &'imp Box<Any> = de.get(&id).unwrap();
-            let co_imp: &'imp M::ComponentImp = ref_boxed.downcast_ref::<M::ComponentImp>().unwrap();
+        let to_borrowed = |arc: &'imp Arc<Shared>| -> &'imp Co<M, T> {
+            let re: &'imp Shared = arc.as_ref();
+            let sh: MutexGuard<'imp, _> = re.lock().expect("todo");
+            let hash: &Container = &sh;
+            let hash = unsafe { mem::transmute::<&Container, &'imp Container>(hash) };
+            let dyn: &'imp _ = hash.get(&id).expect("Something unexpected went wrong!");
+            
+            let co_imp: &'imp M::ComponentImp = dyn
+                .downcast_ref::<M::ComponentImp>()
+                .expect("Something unexpected went wrong!");
             
             Co::new(co_imp)
         };
         
-        if self.cache.borrow().contains_key(&id) {
-            return to_borrowed(&self.cache);
+        let contains = {
+            let sh = self.0.lock().expect("todo");
+            sh.contains_key(&id)
+        };
+        
+        if contains {
+            return to_borrowed(&self.0);
         }
         
         let boxed = Box::new(<M::ComponentImp as Construct>::__construct(self.__dependencies()));
-        let _ = self.cache.borrow_mut().insert(id, boxed);
         
-        to_borrowed(&self.cache)
+        {
+            let mut sh = self.0.lock().expect("todo");
+            let _ = sh.insert(id, boxed);
+        }
+        
+        to_borrowed(&self.0)
     }
 }
 

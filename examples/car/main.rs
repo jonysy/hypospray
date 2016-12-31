@@ -15,8 +15,7 @@ fn main() {
     use sports_car::SportsCar;
     
     let m = Graph::<Module>::new();
-    let engine = m.dep::<Engine>();
     
-    let car = SportsCar { engine: engine };
-    car.gas()
+    let car = SportsCar { engine: m.dep::<Engine>() };
+    car.gas();
 }

@@ -5,6 +5,7 @@ version = "0.1.0"
 authors = ["Jony <jonysy@users.noreply.github.com>"]
 keywords = ["dependency-injection", "inversion-of-control", "di"]
 readme = "README.md"
+repository = "https://github.com/jonysy/hypospray"
 license = "MIT/Apache-2.0"
 
 [[example]]

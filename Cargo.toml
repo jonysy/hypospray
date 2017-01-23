@@ -1,7 +1,10 @@
 [package]
 name = "hypospray"
+description = "Lightweight dependency injection library"
 version = "0.1.0"
 authors = ["Jony <jonysy@users.noreply.github.com>"]
+keywords = ["dependency-injection", "inversion-of-control", "di"]
+readme = "README.md"
 license = "MIT/Apache-2.0"
 
 [[example]]

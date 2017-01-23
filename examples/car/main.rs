@@ -10,7 +10,6 @@ mod sports_car;
 
 fn main() {
     use hypospray::Graph;
-    use engine::Engine;
     use module::Module;
     use sports_car::SportsCar;
     

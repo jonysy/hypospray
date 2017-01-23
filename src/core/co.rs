@@ -4,7 +4,7 @@ use super::{Component, ComponentImp, };
 /// [Ability to automatically derive traits on newtypes (RFC)](https://git.io/vMICm)
 /// [repr](https://doc.rust-lang.org/nomicon/repr-rust.html)
 #[repr(C)]
-pub struct Co<M, T>(pub(super::super) M::ComponentImp)
+pub struct Co<M, T>(pub M::ComponentImp)
     where M: ?Sized + Component<T>, 
           T: ?Sized;
 
@@ -12,7 +12,7 @@ impl<M, T> Co<M, T>
     where M: ?Sized + Component<T>, 
           T: ?Sized {
     
-    pub(super::super) fn new<'imp>(component_imp: &'imp M::ComponentImp) -> &'imp Co<M, T> {
+    pub fn new<'imp>(component_imp: &'imp M::ComponentImp) -> &'imp Co<M, T> {
         
         let ptr = component_imp as *const _ as *const Co<M, T>;
         

@@ -1,8 +1,9 @@
 use std::ops::{Deref, DerefMut};
 use super::{Component, ComponentImp, };
 
-/// [Ability to automatically derive traits on newtypes (RFC)](https://git.io/vMICm)
-/// [repr](https://doc.rust-lang.org/nomicon/repr-rust.html)
+// TODO (DEVELOPMENT.md)
+// [Ability to automatically derive traits on newtypes (RFC)](https://git.io/vMICm)
+// [repr](https://doc.rust-lang.org/nomicon/repr-rust.html)
 #[repr(C)]
 pub struct Co<M, T>(pub M::ComponentImp)
     where M: ?Sized + Component<T>, 
@@ -33,10 +34,11 @@ impl<M, T> Clone for Co<M, T>
         Co(component_imp.clone())
     }
        
-    /// From [doc.rust-lang][1]: `clone_from` can be overridden to reuse the resources of a to avoid 
-    /// unnecessary allocations.
-    ///
-    /// [1]: https://doc.rust-lang.org/std/clone/trait.Clone.html
+    // TODO (DEVELOPMENT.md)
+    // From [doc.rust-lang][1]: `clone_from` can be overridden to reuse the resources of a to avoid 
+    // unnecessary allocations.
+    //
+    // [1]: https://doc.rust-lang.org/std/clone/trait.Clone.html
     fn clone_from(&mut self, source: &Co<M, T>) {
         
         self.0.clone_from(&source.0);

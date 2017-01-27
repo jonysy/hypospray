@@ -2,9 +2,29 @@
 
 A lightweight dependency injection library
 
-[![License](https://img.shields.io/crates/l/hypospray.svg)](LICENSE)
+[![](http://meritbadge.herokuapp.com/hypospray)](https://crates.io/crates/hypospray)
+[![License](https://img.shields.io/crates/l/hypospray.svg)](#license)
 
-### Version
+## What is Dependency Injection?
+
+[5-minute introduction.](https://youtu.be/IKD2-MAkXyQ)
+
+## Goals
+
+* Focused, reusable, testable components
+* A dependency graph checked at compile time
+
+## Cyclic Dependency
+
+DI is not for circular dependency resolution: [Circular dependency is something that is to be avoided][di post].
+
+## Quick-start
+
+### Documentation
+
+* [master](https://docs.rs/hypospray/0.1.0/hypospray/)
+
+### Version Info.
 
 ```sh
 $ rustup -V
@@ -13,20 +33,7 @@ $ rustc -V
 rustc 1.16.0-nightly (7821a9b99 2017-01-23)
 ```
 
-## What is Dependency Injection?
-
-[5-minute introduction.](https://youtu.be/IKD2-MAkXyQ)
-
-## Goals
-
-* Design to allow for focused, reusable, testable components
-* A dependency graph checked at compile time
-
-## Cyclic Dependency
-
-DI is not for circular dependency resolution: [Circular dependency is something that is to be avoided][di post].
-
-## Usage
+### Usage
 
 To use `hypospray`, add the following to `Cargo.toml`:
 

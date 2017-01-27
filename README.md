@@ -2,7 +2,6 @@
 
 A lightweight dependency injection library
 
-[![Build Status](https://travis-ci.org/jonysy/hypospray.svg?branch=master)](https://travis-ci.org/jonysy/hypospray) 
 [![License](https://img.shields.io/crates/l/hypospray.svg)](LICENSE)
 
 ### Version

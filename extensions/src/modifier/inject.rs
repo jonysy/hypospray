@@ -43,12 +43,12 @@ pub fn expand_inject(_: &mut ExtCtxt, _: Span,
             }
         }
         
-        P::from_vec(gen_ty_param_bounds(false, &item, &co))
+        gen_ty_param_bounds(false, &item, &co)
     };
     
     let generics = Generics {
         lifetimes: vec![],
-        ty_params: P::new(),
+        ty_params: vec![],
         where_clause: WhereClause {
             id: item.id,
             predicates: vec![],
@@ -65,14 +65,14 @@ pub fn expand_inject(_: &mut ExtCtxt, _: Span,
             ImplPolarity::Positive,
             Generics {
                 lifetimes: vec![],
-                ty_params: P::from_vec(vec![TyParam {
+                ty_params: vec![TyParam {
                     attrs: ThinVec::new(),
                     ident: Ident::with_empty_ctxt(Symbol::intern(GEN_T_PARAM)),
                     id: item.id,
-                    bounds: P::from_vec(gen_ty_param_bounds(true, &item, &co)),
+                    bounds: gen_ty_param_bounds(true, &item, &co),
                     default: None,
                     span: item.span,
-                }]),
+                }],
                 where_clause: WhereClause {
                     id: item.id,
                     predicates: vec![],
@@ -82,11 +82,10 @@ pub fn expand_inject(_: &mut ExtCtxt, _: Span,
             Some(TraitRef {
                 path: Path {
                     span: item.span,
-                    global: false,
                     segments: vec![
                         PathSegment {
                             identifier: item.ident,
-                            parameters: PathParameters::none(),
+                            parameters: None,
                         }
                     ],
                 },
@@ -96,10 +95,9 @@ pub fn expand_inject(_: &mut ExtCtxt, _: Span,
                 id: item.id,
                 node: TyKind::Path(None, Path {
                     span: item.span,
-                    global: false,
                     segments: vec![PathSegment {
                         identifier: Ident::with_empty_ctxt(Symbol::intern(GEN_T_PARAM)),
-                        parameters: PathParameters::none(),
+                        parameters: None,
                     }]
                 }),
                 span: item.span,
@@ -149,35 +147,33 @@ fn gen_ty_param_bounds(imp: bool, item: &Item, co: &Vec<(Symbol, Span)>) -> Vec<
                 trait_ref: TraitRef {
                     path: Path {
                         span: span,
-                        global: true,
                         segments: vec![
                             PathSegment {
                                 identifier: Ident::with_empty_ctxt(Symbol::intern("hypospray")),
-                                parameters: PathParameters::none(),
+                                parameters: None,
                             },
                             PathSegment {
                                 identifier: Ident::with_empty_ctxt(Symbol::intern("Component")),
-                                parameters: PathParameters::AngleBracketed(
+                                parameters: Some(P(PathParameters::AngleBracketed(
                                     AngleBracketedParameterData {
                                         lifetimes: vec![],
-                                        types: P::from_vec(vec![P(Ty {
+                                        types: vec![P(Ty {
                                             id: item.id,
                                             node: TyKind::Path(None, Path {
                                                 span: span,
-                                                global: false,
                                                 segments: vec![PathSegment {
                                                     identifier: Ident::with_empty_ctxt(name),
-                                                    parameters: PathParameters::none(),
+                                                    parameters: None,
                                                 }]
                                             }),
                                             span: span,
-                                        })]),
-                                        bindings: P::from_vec(vec![]),
+                                        })],
+                                        bindings: vec![],
                                     }
-                                ),
+                                ))),
                             },
                         ]
-                    },
+                    }.default_to_global(),
                     ref_id: item.id,
                 },
                 span: span,

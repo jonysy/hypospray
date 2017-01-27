@@ -1,4 +1,4 @@
-pub use self::ext::{Dependencies, Resolve, };
+pub use self::ext::{Dependencies, Resolve};
 mod ext;
 
 use std::any::{Any, TypeId};

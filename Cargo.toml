@@ -14,4 +14,4 @@ path = "examples/car/main.rs"
 
 [dev-dependencies.hypospray_extensions]
 path = "./extensions"
-version = "0.1.0"
+version = "0.1"

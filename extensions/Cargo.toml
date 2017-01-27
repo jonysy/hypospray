@@ -1,12 +1,15 @@
 [package]
 name = "hypospray_extensions"
-version = "0.1.0"
+description = "Hypospray plugin"
+version = "0.1.2"
 authors = ["Jony <jonysy@users.noreply.github.com>"]
+keywords = ["hypospray", "dependency-injection", "inversion-of-control", "di"]
+repository = "https://github.com/jonysy/hypospray"
 license = "MIT/Apache-2.0"
 
 [lib]
 plugin = true
 
 [dependencies]
-aster = "0.39.0"
+aster = "0.40.0"
 quote = "0.3"

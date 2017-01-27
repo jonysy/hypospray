@@ -1,5 +1,5 @@
 use std::ops::{Deref, DerefMut};
-use super::{Component, ComponentImp, };
+use super::{Component, ComponentImp};
 
 // TODO (DEVELOPMENT.md)
 // [Ability to automatically derive traits on newtypes (RFC)](https://git.io/vMICm)

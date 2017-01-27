@@ -1,7 +1,7 @@
 #![feature(box_syntax, plugin_registrar, quote, rustc_private, slice_patterns)]
 
-#[macro_use] extern crate quote;
-#[macro_use] extern crate syntax;
+extern crate quote;
+extern crate syntax;
 extern crate aster;
 extern crate rustc_plugin;
 

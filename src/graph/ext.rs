@@ -1,4 +1,4 @@
-use {Co, Component, Construct, Graph, Prototype, Singleton, };
+use {Co, Component, Construct, Graph, Prototype, Singleton};
 
 pub trait Resolve<'imp, T, K> where T: ?Sized {
     

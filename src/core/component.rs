@@ -1,4 +1,4 @@
-use super::{ComponentImp, };
+use super::ComponentImp;
 
 pub trait Component<T> where T: ?Sized {
     

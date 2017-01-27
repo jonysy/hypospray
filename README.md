@@ -2,7 +2,17 @@
 
 A lightweight dependency injection library
 
-[![Build Status](https://travis-ci.org/jonysy/hypospray.svg?branch=master)](https://travis-ci.org/jonysy/hypospray) [![License](https://img.shields.io/crates/l/hypospray.svg)](LICENSE)
+[![Build Status](https://travis-ci.org/jonysy/hypospray.svg?branch=master)](https://travis-ci.org/jonysy/hypospray) 
+[![License](https://img.shields.io/crates/l/hypospray.svg)](LICENSE)
+
+### Version
+
+```sh
+$ rustup -V
+rustup 1.0.0 (17b6d21 2016-12-15)
+$ rustc -V
+rustc 1.16.0-nightly (7821a9b99 2017-01-23)
+```
 
 ## What is Dependency Injection?
 

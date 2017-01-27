@@ -22,7 +22,7 @@ DI is not for circular dependency resolution: [Circular dependency is something 
 
 ### Documentation
 
-* [master](https://docs.rs/hypospray/0.1.0/hypospray/)
+* [master](https://docs.rs/hypospray/0.1.1/hypospray/)
 
 ### Version Info.
 

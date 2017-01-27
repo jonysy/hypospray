@@ -2,7 +2,7 @@
 name = "hypospray"
 description = "Lightweight dependency injection library"
 documentation = "https://docs.rs/hypospray"
-version = "0.1.1"
+version = "0.1.2"
 authors = ["Jony <jonysy@users.noreply.github.com>"]
 keywords = ["dependency-injection", "inversion-of-control", "di"]
 readme = "README.md"
